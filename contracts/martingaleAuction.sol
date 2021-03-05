@@ -12,8 +12,11 @@ contract MartingaleAuction {
         address _tokenConntract;
         address _owner;
         uint _tokenId;
+        uint multiples;
         uint _curentPrice;
         uint _multiplier;
+        uint startPrie;
+        uint freeTokens;
         uint auctionStart;
         bool _isActive;
     }
@@ -31,7 +34,7 @@ contract MartingaleAuction {
         auctionCounter--;
         
     }
-    function addAuction{address tokenConntract,address owner,uint tokenId,uint curentPrice, uint multiplier,uint auctionStart,bool isActive)public{
+    function addAuction{address tokenConntract,address owner,uint tokenId,uint freeTokens,uint  multiples  uint startPrice, uint multiplier,uint auctionStart,bool isActive)public{
         
     }
      
