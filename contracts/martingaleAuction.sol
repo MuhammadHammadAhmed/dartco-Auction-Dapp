@@ -127,7 +127,8 @@ contract MartingaleAuction {
          newprice=itemData._curentPrice *itemData._multiplier;
          }
          idToAuction[id]._curentPrice=newprice;
-         idToAuction[id]._balanceTokens=idToAuction[id]._balanceTokens-1;
+         idToAuction[id]._balanceTokens=idToAuction[id]._balanceTokens.sub(1);
+         
          
          
     }
