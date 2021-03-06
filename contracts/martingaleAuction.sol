@@ -71,7 +71,7 @@ library SafeMath {
 }
 
 contract MartingaleAuction {
-    
+   using SafeMath for uint256; 
     struct Item {
         address _tokenConntract;
         address _owner;
@@ -88,7 +88,7 @@ contract MartingaleAuction {
      mapping(uint=>Item)public idToAuction ;// id to auction details mapping
     uint auctionCounter;
     
-    function  auctiondata(uint id)public view returns(address,address,uint,uint,uint,uint,uint,uint,uint,uint,uint, bool){
+    function  auctiondata(uint id)public view returns(address,address,uint,uint,uint,uint,uint,uint,uint,uint, bool){
     Item memory  itemData =idToAuction[id];
     
     return (itemData._tokenConntract,itemData._owner,itemData._tokenId,itemData._multiples, itemData._curentPrice,itemData._multiplier,itemData._startPrie,itemData._freeTokens, itemData._balanceTokens,itemData._auctionStart, itemData._isActive);
@@ -100,6 +100,17 @@ contract MartingaleAuction {
         
     }
     function addAuction( address tokenConntract,address owner,uint tokenId,uint freeTokens,uint  multiples ,  uint startPrice, uint multiplier,uint duration)public{
+         idToAuction[auctionCounter]._tokenConntract=tokenConntract;
+        idToAuction[auctionCounter]._owner=owner;
+        idToAuction[auctionCounter]._tokenId =tokenId;
+        idToAuction[auctionCounter]._multiples=multiples;
+        idToAuction[auctionCounter]._curentPrice;
+        idToAuction[auctionCounter]._multiplier;
+        idToAuction[auctionCounter]._startPrie;
+        idToAuction[auctionCounter]._freeTokens;
+        idToAuction[auctionCounter]._balanceTokens;
+        idToAuction[auctionCounter]._auctionStart;
+        idToAuction[auctionCounter]._isActive;
         
     }
     
@@ -109,7 +120,7 @@ contract MartingaleAuction {
      
    //  token.safeTransferFrom()
     }
-    function bid(uint id, uint amount)public{
+    function bid(uint id, uint amount)public payable{
         require (amount==msg.value, "amount mismatch");
          Item memory itemData = idToAuction[id];
          require(itemData._curentPrice==amount,"amount less than current price");
@@ -127,7 +138,7 @@ contract MartingaleAuction {
          newprice=itemData._curentPrice *itemData._multiplier;
          }
          idToAuction[id]._curentPrice=newprice;
-         idToAuction[id]._balanceTokens=idToAuction[id]._balanceTokens.sub(1);
+         idToAuction[id]._balanceTokens=itemData._balanceTokens.sub(1);
          
          
          
