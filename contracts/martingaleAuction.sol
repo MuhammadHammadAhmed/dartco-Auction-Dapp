@@ -97,7 +97,7 @@ contract MartingaleAuction {
     
     function removeAuction(uint id) public returns(bool){
         delete idToAuction[id];
-        auctionCounter--;
+        auctionCounter.sub(1);
         
     }
     function addAuction( address tokenConntract,address owner,uint tokenId,uint freeTokens,uint  multiples ,  uint startPrice, uint multiplier,uint duration)public{
@@ -112,7 +112,7 @@ contract MartingaleAuction {
         idToAuction[auctionCounter]._balanceTokens=multiples;
         idToAuction[auctionCounter]._auctionStart= block.timestamp;
         idToAuction[auctionCounter]._isActive=true;
-        
+        auctionCounter++;
     }
     
     function addEscrow(address tokenConntract)public{
