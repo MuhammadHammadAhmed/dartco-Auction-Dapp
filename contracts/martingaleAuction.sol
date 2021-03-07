@@ -88,8 +88,9 @@ contract MartingaleAuction {
      mapping(uint=>Item)public idToAuction ;// id to auction details mapping
     uint auctionCounter;
     
-    function  auctiondata(uint id)public view returns(address,address,uint,uint,uint,uint,uint,uint,uint,uint, bool){
+    function  viewauctiondata(uint id)public view returns(address,address,string memory,uint,uint,uint,uint,uint,uint,uint,uint, bool){
     Item memory  itemData =idToAuction[id];
+    string memory uri="sampleURI";
     
     return (itemData._tokenConntract,itemData._owner,itemData._tokenId,itemData._multiples, itemData._curentPrice,itemData._multiplier,itemData._startPrie,itemData._freeTokens, itemData._balanceTokens,itemData._auctionStart, itemData._isActive);
 }
@@ -99,18 +100,18 @@ contract MartingaleAuction {
         auctionCounter--;
         
     }
-    function addAuction( address tokenConntract,address owner,uint tokenId,uint freeTokens,uint  multiples ,  uint startPrice, uint multiplier,uint duration)public{
+    function addAuction( address tokenConntract,address owner,uri,uint tokenId,uint freeTokens,uint  multiples ,  uint startPrice, uint multiplier,uint duration)public{
          idToAuction[auctionCounter]._tokenConntract=tokenConntract;
         idToAuction[auctionCounter]._owner=owner;
         idToAuction[auctionCounter]._tokenId =tokenId;
         idToAuction[auctionCounter]._multiples=multiples;
-        idToAuction[auctionCounter]._curentPrice;
-        idToAuction[auctionCounter]._multiplier;
-        idToAuction[auctionCounter]._startPrie;
-        idToAuction[auctionCounter]._freeTokens;
-        idToAuction[auctionCounter]._balanceTokens;
-        idToAuction[auctionCounter]._auctionStart;
-        idToAuction[auctionCounter]._isActive;
+        idToAuction[auctionCounter]._curentPrice=0;
+        idToAuction[auctionCounter]._multiplier= multiplier;
+        idToAuction[auctionCounter]._startPrie=startPrice;
+        idToAuction[auctionCounter]._freeTokens=freeTokens;
+        idToAuction[auctionCounter]._balanceTokens=multiples;
+        idToAuction[auctionCounter]._auctionStart= block.timestamp;
+        idToAuction[auctionCounter]._isActive=true;
         
     }
     
@@ -133,13 +134,13 @@ contract MartingaleAuction {
            uint currenttoken = itemData._multiples - itemData._balanceTokens;
            if(currenttoken<itemData._freeTokens){
               // newprice=0;//do nothing already zero
-           
-         }else{
+           }else if(currenttoken==itemData._freeTokens){
+               newprice= itemData._startPrie; /* set the price to start price if it reaches the free token limit */
+           }else{
          newprice=itemData._curentPrice *itemData._multiplier;
          }
          idToAuction[id]._curentPrice=newprice;
          idToAuction[id]._balanceTokens=itemData._balanceTokens.sub(1);
-         
          
          
     }
