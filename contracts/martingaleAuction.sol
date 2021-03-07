@@ -92,7 +92,7 @@ contract MartingaleAuction {
     Item memory  itemData =idToAuction[id];
     string memory uri="sampleURI";
     
-    return (itemData._tokenConntract,itemData._owner,itemData._tokenId,itemData._multiples, itemData._curentPrice,itemData._multiplier,itemData._startPrie,itemData._freeTokens, itemData._balanceTokens,itemData._auctionStart, itemData._isActive);
+    return (itemData._tokenConntract,itemData._owner,uri,itemData._tokenId,itemData._multiples, itemData._curentPrice,itemData._multiplier,itemData._startPrie,itemData._freeTokens, itemData._balanceTokens,itemData._auctionStart, itemData._isActive);
 }
     
     function removeAuction(uint id) public returns(bool){
@@ -100,7 +100,7 @@ contract MartingaleAuction {
         auctionCounter--;
         
     }
-    function addAuction( address tokenConntract,address owner,uri,uint tokenId,uint freeTokens,uint  multiples ,  uint startPrice, uint multiplier,uint duration)public{
+    function addAuction( address tokenConntract,address owner,uint tokenId,uint freeTokens,uint  multiples ,  uint startPrice, uint multiplier,uint duration)public{
          idToAuction[auctionCounter]._tokenConntract=tokenConntract;
         idToAuction[auctionCounter]._owner=owner;
         idToAuction[auctionCounter]._tokenId =tokenId;
